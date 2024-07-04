@@ -5,5 +5,6 @@ El proyecto consiste en la aplicación de Apache Kafka, Spark y HIVE para la imp
 <h5>COmandos</h5>
 
 ```bash
-    $ nc 127.0.0.1 9034
+    $ cd kafka/
+    $bin/zookeeper-server-start.sh config/zookeeper.properties
 ```
