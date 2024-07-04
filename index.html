@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Inventario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #333, #666);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            animation: pulseBackground 10s ease-in-out infinite alternate;
+        }
+        .container {
+            max-width: 600px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeInUp 0.5s ease;
+        }
+        h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .option {
+            display: inline-block;
+            padding: 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .option:hover {
+            background-color: #0056b3;
+        }
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes pulseBackground {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Consulta de Inventario</h1>
+        <div class="options">
+	    <a href="/top_productos" class="option">
+                Top 5 Productos Más Vendidos
+            </a>
+            <a href="/ventas" class="option">
+                Consultar Ventas
+            </a>
+            <a href="/gaseosas" class="option">
+                Consultar Gaseosas
+            </a>
+            <a href="/tiendas" class="option">
+                Consultar Por Todas las Tiendas
+            </a>
+            <a href="/ventas_por_categoria" class="option">
+                Ventas por Categoría
+            </a>
+            <a href="/ventas_por_mes" class="option">
+                Ventas por Mes
+            </a>
+            <a href="//presupuesto_de_ventas_por_mes'" class="option">
+                Presupuesto de Ventas por Mes
+            </a>
+            
+        </div>
+    </div>
+</body>
+</html>
