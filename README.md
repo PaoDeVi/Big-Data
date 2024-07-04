@@ -6,4 +6,4 @@ El proyecto consiste en la aplicación de Apache Kafka, Spark y HIVE para la imp
 
 ```bash
     $ nc 127.0.0.1 9034
-    ```
+```
