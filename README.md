@@ -2,19 +2,16 @@
 
 El proyecto consiste en la aplicación de Apache Kafka, Spark y HIVE para la implementación de un sistema de inventario de diferentes productos, los cuáles se pueden filtrar según diferentes criterios, cómo categorías, inventario actual, ventas por fecha, etc. Empleando Apache Kafka se crearán los tópicos de nuestros productos, a los cuáles los productores enviarán los detalles de cada producto y enviarán los detalles al consumidor suscrito, el cuál en base a sus necesidades, visualizará la información que necesite filtrada previamente por HIVE.
 
-<h5>Comandos</h5>
 
-```bash
-    $ cd kafka/
-    $bin/zookeeper-server-start.sh config/zookeeper.properties
-```
 ## Broker:
+Este comando inicia el broker de Kafka, que maneja la comunicación entre los productores y los consumidores.
 ```bash
 $ cd kafka/
 ~/kafka$ bin/kafka-server-start.sh config/server.properties
 ```
 
 ## Hadoop:
+Hadoop Distributed File System (HDFS) es el sistema de archivos distribuido donde almacenaremos los datos. Estos comandos formatean el namenode, inician el sistema de archivos, y crean directorios necesarios.
 ```bash
 ~$ hdfs namenode -format
 ~$ start-dfs.sh
@@ -27,37 +24,43 @@ $ cd kafka/
 ```
 
 ## Kafka
+Estos comandos configuran y crean los tópicos en Kafka, que serán usados para enviar y recibir información de productos.
 ```bash
 ~/kafka$ bin/kafka-topics.sh --list --bootstrap-server localhost:9092
 ~/kafka$ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic ferreteria
 ~/kafka$ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic gaseosas
 ```
-Note: Cuando recien instalas todo por primera vez:
+Note: Si acabas de instalar Hive y Kafka por primera vez, deberás mover ciertos archivos para evitar errores relacionados con logging:
 ```bash
 ~/hive$ mv lib/log4j-slf4j-impl-2.6.2.jar lib/log4j-slf4j-impl-2.6.2.jar.bak
 ```
 
 ## Para limpiar
+Si encuentras errores con la base de datos de metadatos de Hive, utiliza estos comandos para eliminar los archivos de bloqueo y limpiar el estado del sistema:
 ```bash
 rm /home/seed/metastore_db/db.lck
 rm /home/seed/metastore_db/dbex.lck
 rm -rf /home/seed/metastore_db
-
-#Salir del localhost
+```
+## Salir localhost
+Si estás conectado a un localhost, usa el siguiente comando para salir.
+```bash
 ssh localhost
 exit
 ```
 
 ## Database
+Este comando inicializa el esquema de la base de datos que Hive necesita para funcionar correctamente:
 ```bash
 ~$ schematool -initSchema -dbType derby
 ~$ hive --service metastore &
 ```
-En otra terminal:
+Abre otra terminal y verifica que la base de datos esté disponible:
 ```bash
 ~$ hive
 hive> show databases;
 ```
+Si ves algún error, realiza la limpieza nuevamente como se mencionó anteriormente y reinicia el metastore.
 Dará un error no te preocupes, realizá Ctrl+C en la terminal donde ejecutaste (hive --service metastore &). Ahora realiza la limpieza:
 ```bash
 rm /home/seed/metastore_db/db.lck
@@ -70,9 +73,10 @@ Volverás a iniciarlizar:
 ~$ schematool -initSchema -dbType derby
 ~$ hive --service metastore &
 ```
-Esto mostrará un mensaje con el símbolo [2]
+Esto mostrará un mensaje con el símbolo [2] indicando la cantidad de productos creados por kafka.
 
 ## Hive
+Hive te permite almacenar los datos en formato estructurado. Aquí creamos las tablas para almacenar las ventas de ferretería y gaseosas.
 Abrimos la consola de hive con el siguiente comando:
 ```bash
 hive> show databases;
@@ -102,7 +106,7 @@ hive> CREATE TABLE IF NOT EXISTS gaseosas (
           )
            STORED AS PARQUET;
 ```
-Mostrará un mensaje de: OK Time taken: 0.44 seconds (esto puede variar según la máquina.
+Mostrará un mensaje de: OK Time taken: 0.44 seconds (esto puede variar según la máquina).
 
 ## Spark
 Primero se ejecuta el stream y su productor correspondiente:
@@ -130,7 +134,7 @@ hive> CREATE TABLE IF NOT EXISTS tiendas (
            )
           STORED AS PARQUET;
 ```
-E insertamos los datos:
+E insertamos los datos en las tablas creadas:
 ```bash
 hive> INSERT INTO TABLE tiendas
     SELECT
@@ -153,6 +157,7 @@ SELECT
 FROM ventas;
 ```
 ## Ejecución de la APP
+La app fue realizada con Flask, al ejecutar el comando iniciará el servicio e indicará la dirección IP. Finalmente, copia y pega ese IP en tu browser para visualiar la aplicación.
 ```bash
 python3 app.py
 ```
