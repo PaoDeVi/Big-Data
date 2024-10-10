@@ -152,4 +152,7 @@ SELECT
     id_venta AS id
 FROM ventas;
 ```
-
+## Ejecución de la APP
+```bash
+python3 app.py
+```
